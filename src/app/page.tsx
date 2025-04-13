@@ -1,103 +1,144 @@
-import Image from "next/image";
+'use client';
+
+import React, { useState } from 'react';
+import SewingTable from '@/components/SewingTable';
+import ProcessingGroup from '@/components/ProcessingGroup';
+import PressTable from '@/components/PressTable';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [processingGroups, setProcessingGroups] = useState([1]);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const addProcessingGroup = () => {
+    setProcessingGroups([...processingGroups, processingGroups.length + 1]);
+  };
+
+  const deleteProcessingGroup = (number: number) => {
+    setProcessingGroups(processingGroups.filter(group => group !== number));
+  };
+
+  return (
+    <main className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto py-6 px-4">
+        {/* ヘッダー情報 */}
+        <div className="bg-white rounded-lg shadow mb-6">
+          <div className="p-6 space-y-4">
+            {/* 1行目 */}
+            <div className="grid grid-cols-4 gap-8 items-center">
+              <div>
+                <label className="block text-sm text-gray-600">OA品番</label>
+                <div className="mt-1 text-lg font-semibold text-[#333333]">OA1618</div>
+              </div>
+              <div>
+                <label className="block text-sm text-gray-600">加工コード</label>
+                <div className="mt-1 text-lg font-semibold text-[#333333]">CW</div>
+              </div>
+              <div>
+                <label className="block text-sm text-gray-600">色番</label>
+                <div className="mt-1 text-lg font-semibold text-[#333333]">K1</div>
+              </div>
+              <div className="flex justify-end">
+                <button className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700">
+                  編集
+                </button>
+              </div>
+            </div>
+
+            {/* 2行目 */}
+            <div className="grid grid-cols-4 gap-8">
+              <div>
+                <label className="block text-sm text-gray-600">相手先品番</label>
+                <div className="mt-1 text-lg font-semibold text-[#333333]">1234567</div>
+              </div>
+              <div>
+                <label className="block text-sm text-gray-600">相手先色番</label>
+                <div className="mt-1 text-lg font-semibold text-[#333333]">BK</div>
+              </div>
+              <div>
+                <label className="block text-sm text-gray-600">収納者</label>
+                <div className="mt-1 text-lg font-semibold text-[#333333]">大西</div>
+              </div>
+              <div>
+                <label className="block text-sm text-gray-600">作成者</label>
+                <div className="mt-1 text-lg font-semibold text-[#333333]">猪原</div>
+              </div>
+            </div>
+
+            {/* 3行目 */}
+            <div className="grid grid-cols-4 gap-8">
+              <div>
+                <label className="block text-sm text-gray-600">期間</label>
+                <div className="mt-1 text-lg font-semibold text-[#333333]">2024-01-01</div>
+              </div>
+              <div>
+                <label className="block text-sm text-gray-600">種別</label>
+                <div className="mt-1 text-lg font-semibold text-[#333333]">簡</div>
+              </div>
+              <div>
+                <label className="block text-sm text-gray-600">部数</label>
+                <div className="mt-1 text-lg font-semibold text-[#333333]">6</div>
+              </div>
+              <div>
+                <label className="block text-sm text-gray-600">本数</label>
+                <div className="mt-1 text-lg font-semibold text-[#333333]">24本</div>
+              </div>
+            </div>
+
+            {/* 4行目 */}
+            <div className="grid grid-cols-4 gap-8">
+              <div>
+                <label className="block text-sm text-gray-600">加工点数</label>
+                <div className="mt-1 text-lg font-semibold text-[#333333]">4</div>
+              </div>
+              <div>
+                <label className="block text-sm text-gray-600">目的</label>
+                <div className="mt-1 text-lg font-semibold text-[#333333]">OAT/OAO/GSI</div>
+              </div>
+              <div className="col-span-2">
+                <label className="block text-sm text-gray-600">備考</label>
+                <div className="mt-1 text-lg font-semibold text-[#333333]">あああああああああああ</div>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        {/* メインコンテンツ */}
+        <div className="space-y-6">
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">縫製グループ</h2>
+            <SewingTable />
+          </div>
+
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">加工グループ</h2>
+            {processingGroups.map((number) => (
+              <ProcessingGroup key={number} number={number} onDelete={deleteProcessingGroup} />
+            ))}
+            <div className="flex justify-center mt-4">
+              <button 
+                onClick={addProcessingGroup}
+                className="flex items-center px-4 py-2 border border-purple-600 text-purple-600 rounded-lg hover:bg-purple-50"
+              >
+                <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                加工グループを追加
+              </button>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">プレスグループ</h2>
+            <PressTable />
+          </div>
+        </div>
+
+        {/* 登録ボタン */}
+        <div className="mt-8 flex justify-end">
+          <button className="bg-purple-600 text-white px-8 py-3 rounded-lg hover:bg-purple-700 text-lg font-medium">
+            登録
+          </button>
+        </div>
+      </div>
+    </main>
   );
 }
