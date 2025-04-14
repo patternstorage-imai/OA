@@ -25,16 +25,16 @@ export default function Home() {
             {/* 1行目 */}
             <div className="grid grid-cols-4 gap-8 items-center">
               <div>
-                <label className="block text-sm text-gray-600">OA品番</label>
-                <div className="mt-1 text-lg font-semibold text-[#333333]">OA1618</div>
+                <label className="block text-sm text-gray-600">生地数</label>
+                <div className="mt-1 text-lg font-semibold text-[#333333]">10種</div>
               </div>
               <div>
-                <label className="block text-sm text-gray-600">加工コード</label>
-                <div className="mt-1 text-lg font-semibold text-[#333333]">CW</div>
+                <label className="block text-sm text-gray-600">依頼者</label>
+                <div className="mt-1 text-lg font-semibold text-[#333333]">大西</div>
               </div>
               <div>
-                <label className="block text-sm text-gray-600">色番</label>
-                <div className="mt-1 text-lg font-semibold text-[#333333]">K1</div>
+                <label className="block text-sm text-gray-600">作成者</label>
+                <div className="mt-1 text-lg font-semibold text-[#333333]">猶原</div>
               </div>
               <div className="flex justify-end">
                 <button className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700">
@@ -44,6 +44,28 @@ export default function Home() {
             </div>
 
             {/* 2行目 */}
+            <div className="grid grid-cols-4 gap-8">
+              <div>
+                <label className="block text-sm text-gray-600">納期</label>
+                <div className="mt-1 text-lg font-semibold text-[#333333]">2025/04/14</div>
+              </div>
+              <div>
+                <label className="block text-sm text-gray-600">目的</label>
+                <div className="mt-1 text-lg font-semibold text-[#333333]">OAT/OAC/TXP</div>
+              </div>
+              <div>
+                <label className="block text-sm text-gray-600">部数</label>
+                <div className="mt-1 text-lg font-semibold text-[#333333]">計20本</div>
+              </div>
+              <div>
+                <label className="block text-sm text-gray-600">ハンガー履歴</label>
+                <button className="mt-1 bg-white border border-purple-600 text-purple-600 px-6 py-2 rounded-lg hover:bg-purple-50">
+                  参照
+                </button>
+              </div>
+            </div>
+
+            {/* 3行目 */}
             <div className="grid grid-cols-4 gap-8">
               <div>
                 <label className="block text-sm text-gray-600">相手先品番</label>
@@ -63,7 +85,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 3行目 */}
+            {/* 4行目 */}
             <div className="grid grid-cols-4 gap-8">
               <div>
                 <label className="block text-sm text-gray-600">期間</label>
@@ -74,25 +96,17 @@ export default function Home() {
                 <div className="mt-1 text-lg font-semibold text-[#333333]">簡</div>
               </div>
               <div>
-                <label className="block text-sm text-gray-600">部数</label>
-                <div className="mt-1 text-lg font-semibold text-[#333333]">6</div>
-              </div>
-              <div>
                 <label className="block text-sm text-gray-600">本数</label>
                 <div className="mt-1 text-lg font-semibold text-[#333333]">24本</div>
               </div>
-            </div>
-
-            {/* 4行目 */}
-            <div className="grid grid-cols-4 gap-8">
               <div>
                 <label className="block text-sm text-gray-600">加工点数</label>
                 <div className="mt-1 text-lg font-semibold text-[#333333]">4</div>
               </div>
-              <div>
-                <label className="block text-sm text-gray-600">目的</label>
-                <div className="mt-1 text-lg font-semibold text-[#333333]">OAT/OAO/GSI</div>
-              </div>
+            </div>
+
+            {/* 5行目 */}
+            <div className="grid grid-cols-4 gap-8">
               <div className="col-span-2">
                 <label className="block text-sm text-gray-600">備考</label>
                 <div className="mt-1 text-lg font-semibold text-[#333333]">あああああああああああ</div>

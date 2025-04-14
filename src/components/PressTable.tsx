@@ -10,6 +10,11 @@ export default function PressTable() {
 
   return (
     <div className="overflow-x-auto">
+      <div className="flex justify-end mb-4">
+        <button className="bg-white border border-purple-600 text-purple-600 px-4 py-1 rounded-lg hover:bg-purple-50 text-sm">
+          ハンガー履歴参照
+        </button>
+      </div>
       <table className="min-w-full">
         <thead>
           <tr className="border-b border-gray-200">

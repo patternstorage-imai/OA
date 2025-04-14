@@ -78,6 +78,9 @@ export default function SewingTable() {
               <span className="text-sm text-gray-500">({groupQuantities[group]}本)</span>
             </div>
             <div className="flex items-center space-x-2">
+              <button className="bg-white border border-purple-600 text-purple-600 px-4 py-1 rounded-lg hover:bg-purple-50 text-sm">
+                ハンガー履歴参照
+              </button>
               <button onClick={() => openEditModal(group)} className="p-1 hover:bg-gray-200 rounded">
                 <span className="sr-only">編集</span>
                 <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
