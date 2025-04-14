@@ -69,6 +69,7 @@ export default function SewingTable() {
 
   return (
     <div className="space-y-4">
+    わわわわあえええええ
       {[...new Set(rows.map(row => row.group))].map(group => (
         <div key={group} className="bg-gray-50 rounded-lg">
           <div className="flex justify-between items-center p-3 bg-gray-100 rounded-t-lg">
@@ -93,26 +94,26 @@ export default function SewingTable() {
             </div>
           </div>
           <div className="p-4">
-            <table className="min-w-full">
+            <table className="min-w-full table-fixed">
               <thead>
                 <tr className="border-b border-gray-200">
-                  <th className="text-left text-sm text-[#333333] pb-3 pr-4">種別</th>
-                  <th className="text-left text-sm text-[#333333] pb-3 pr-4">上下使用</th>
-                  <th className="text-left text-sm text-[#333333] pb-3 pr-4">糸使い-番手・色</th>
-                  <th className="text-left text-sm text-[#333333] pb-3 pr-4">依頼先</th>
-                  <th className="text-left text-sm text-[#333333] pb-3 pr-4">投入予定日</th>
-                  <th className="text-left text-sm text-[#333333] pb-3 pr-4">完了予定日</th>
-                  <th className="text-left text-sm text-[#333333] pb-3 pr-4">出荷先</th>
-                  <th className="text-left text-sm text-[#333333] pb-3 w-24">操作</th>
+                  <th className="text-left text-sm text-[#333333] pb-3 pr-4 w-1/6">種別</th>
+                  <th className="text-left text-sm text-[#333333] pb-3 pr-4 w-1/8">上下使用</th>
+                  <th className="text-left text-sm text-[#333333] pb-3 pr-4 w-1/6">糸使い-番手・色</th>
+                  <th className="text-left text-sm text-[#333333] pb-3 pr-4 w-1/8">依頼先</th>
+                  <th className="text-left text-sm text-[#333333] pb-3 pr-4 w-1/6">投入予定日</th>
+                  <th className="text-left text-sm text-[#333333] pb-3 pr-4 w-1/6">完了予定日</th>
+                  <th className="text-left text-sm text-[#333333] pb-3 pr-4 w-1/8">出荷先</th>
+                  <th className="text-left text-sm text-[#333333] pb-3 w-20">操作</th>
                 </tr>
               </thead>
               <tbody>
                 {rows.filter(row => row.group === group).map((row) => (
                   <tr key={row.id} className="border-b border-gray-100">
                     <td className="py-2 pr-4">
-                      <select className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent text-[#333333]">
-                        <option>選択してください</option>
-                        <option>パネル：耳有</option>
+                      <select className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-[#333333] bg-white">
+                        <option value="">選択してください</option>
+                        <option value="panel">パネル：耳有</option>
                       </select>
                     </td>
                     <td className="py-2 pr-4">
