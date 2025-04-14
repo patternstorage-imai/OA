@@ -69,7 +69,6 @@ export default function SewingTable() {
 
   return (
     <div className="space-y-4">
-    わわわわあえええええ
       {[...new Set(rows.map(row => row.group))].map(group => (
         <div key={group} className="bg-gray-50 rounded-lg">
           <div className="flex justify-between items-center p-3 bg-gray-100 rounded-t-lg">
@@ -80,7 +79,7 @@ export default function SewingTable() {
             </div>
             <div className="flex items-center space-x-2">
               <button onClick={() => openEditModal(group)} className="p-1 hover:bg-gray-200 rounded">
-                <span className="sr-only">編集</span>
+                <span className="sr-only">編集したよ</span>
                 <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                 </svg>
