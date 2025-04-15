@@ -204,12 +204,25 @@ export default function Home() {
             {/* ④加工 */}
             <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
               <h3 className="text-base font-medium text-gray-900 mb-4">④加工グループ</h3>
-              {processingGroups.map((number) => (
-                <ProcessingGroup 
-                  key={number} 
-                  number={number}
-                />
-              ))}
+              <div className="space-y-4">
+                {processingGroups.map((number) => (
+                  <ProcessingGroup 
+                    key={number} 
+                    number={number}
+                  />
+                ))}
+                <div className="flex justify-center">
+                  <button
+                    onClick={addProcessingGroup}
+                    className="bg-white border border-purple-600 text-purple-600 px-4 py-2 rounded-lg hover:bg-purple-50 flex items-center space-x-1"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                    <span>加工グループの追加</span>
+                  </button>
+                </div>
+              </div>
             </div>
 
             {/* ⑤プレス */}

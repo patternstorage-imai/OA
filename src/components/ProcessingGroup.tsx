@@ -28,6 +28,27 @@ export default function ProcessingGroup({ number }: ProcessingGroupProps) {
     shipTo: '',
     quantity: ''
   }]);
+  const [groupQuantity, setGroupQuantity] = useState('');
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editData, setEditData] = useState({
+    groupNumber: '',
+    groupName: '',
+    quantity: ''
+  });
+
+  const handleEditClick = () => {
+    setEditData({
+      groupNumber: number.toString(),
+      groupName: `加工グループ ${number}`,
+      quantity: groupQuantity
+    });
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditSave = () => {
+    setGroupQuantity(editData.quantity);
+    setIsEditModalOpen(false);
+  };
 
   const addProcess = () => {
     setProcesses([...processes, {
@@ -51,8 +72,88 @@ export default function ProcessingGroup({ number }: ProcessingGroupProps) {
   return (
     <div className="bg-white rounded-lg p-4 mb-4 border border-gray-200">
       <div className="flex justify-between items-center mb-4">
-        <h4 className="text-base font-medium text-gray-900">加工グループ {number}</h4>
+        <div className="flex items-center space-x-4">
+          <h4 className="text-base font-medium text-gray-900">加工グループ {number}</h4>
+          <div className="flex items-center space-x-2">
+            <span className="text-sm text-gray-600">本数：</span>
+            <input
+              type="number"
+              value={groupQuantity}
+              onChange={(e) => setGroupQuantity(e.target.value)}
+              className="w-20 border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            />
+          </div>
+        </div>
+        <button 
+          onClick={handleEditClick}
+          className="p-2 hover:bg-gray-100 rounded-full"
+        >
+          <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+          </svg>
+        </button>
       </div>
+
+      {/* 編集モーダル */}
+      {isEditModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center z-50 pt-20">
+          <div className="bg-white rounded-lg p-6 w-[500px]">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-lg font-semibold text-[#333333]">グループ編集</h3>
+              <button 
+                onClick={() => setIsEditModalOpen(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">グループNo</label>
+                <input
+                  type="text"
+                  value={editData.groupNumber}
+                  onChange={(e) => setEditData({ ...editData, groupNumber: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">グループ名</label>
+                <input
+                  type="text"
+                  value={editData.groupName}
+                  onChange={(e) => setEditData({ ...editData, groupName: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">本数</label>
+                <input
+                  type="number"
+                  value={editData.quantity}
+                  onChange={(e) => setEditData({ ...editData, quantity: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+            </div>
+
+            <div className="mt-6 flex justify-end">
+              <button
+                onClick={handleEditSave}
+                className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700"
+              >
+                保存
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="p-3">
         <table className="min-w-full">
           <thead>
@@ -63,7 +164,6 @@ export default function ProcessingGroup({ number }: ProcessingGroupProps) {
               <th className="text-left text-sm text-gray-900 pb-3">投入予定日</th>
               <th className="text-left text-sm text-gray-900 pb-3">完了予定日</th>
               <th className="text-left text-sm text-gray-900 pb-3">出荷先</th>
-              <th className="text-left text-sm text-gray-900 pb-3">本数</th>
               <th className="text-left text-sm text-gray-900 pb-3">操作</th>
             </tr>
           </thead>
@@ -158,19 +258,6 @@ export default function ProcessingGroup({ number }: ProcessingGroupProps) {
                     <option value="MRQ">MRQ</option>
                     <option value="NB">NB</option>
                   </select>
-                </td>
-                <td className="py-2 pr-4">
-                  <input 
-                    type="number"
-                    value={process.quantity}
-                    onChange={(e) => {
-                      const updatedProcesses = [...processes];
-                      const index = processes.findIndex(p => p.id === process.id);
-                      updatedProcesses[index] = { ...process, quantity: e.target.value };
-                      setProcesses(updatedProcesses);
-                    }}
-                    className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                  />
                 </td>
                 <td className="py-2 flex items-center space-x-1">
                   {process.id === processes.length && (
