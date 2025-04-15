@@ -17,18 +17,44 @@ interface FabricRow {
 
 export default function FabricTable() {
   // 実際の実装ではAPIからデータを取得します
-  const [rows, setRows] = useState<FabricRow[]>([{
-    id: 1,
-    oaNumber: '',
-    processing: '',
-    oaColorCode: '',
-    supplierCode: '',
-    supplierColorCode: '',
-    vendor: '',
-    type: '',
-    hasOrder: false,
-    orderMeters: 0
-  }]);
+  const [rows, setRows] = useState<FabricRow[]>([
+    {
+      id: 1,
+      oaNumber: 'OA2024001',
+      processing: 'ワンウォッシュ',
+      oaColorCode: '213',
+      supplierCode: 'YK7070',
+      supplierColorCode: '213',
+      vendor: 'BNS',
+      type: '定番',
+      hasOrder: true,
+      orderMeters: 150
+    },
+    {
+      id: 2,
+      oaNumber: 'OA2024002',
+      processing: 'バイオウォッシュ',
+      oaColorCode: '415',
+      supplierCode: 'YK7071',
+      supplierColorCode: '415',
+      vendor: 'SKS',
+      type: '別注',
+      hasOrder: true,
+      orderMeters: 200
+    },
+    {
+      id: 3,
+      oaNumber: 'OA2024003',
+      processing: 'ストーンウォッシュ',
+      oaColorCode: '167',
+      supplierCode: 'YK7072',
+      supplierColorCode: '167',
+      vendor: 'NB',
+      type: '定番',
+      hasOrder: false,
+      orderMeters: 0
+    }
+  ]);
 
   const updateRow = (index: number, field: keyof FabricRow, value: string | boolean | number) => {
     const updatedRows = [...rows];
