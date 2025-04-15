@@ -180,7 +180,15 @@ export default function Home() {
           <div className="space-y-6">
             {/* ①生地 */}
             <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
-              <h3 className="text-base font-medium text-gray-900 mb-4">①生地</h3>
+              <div className="flex justify-between items-center">
+                <h3 className="text-base font-medium text-gray-900 mb-4">①生地内容</h3>
+                <button
+                  onClick={() => setIsFabricModalOpen(true)}
+                  className="bg-white border border-purple-600 text-purple-600 px-4 py-2 rounded-lg hover:bg-purple-50"
+                >
+                  生地詳細
+                </button>
+              </div>
               <FabricTable />
             </div>
 
