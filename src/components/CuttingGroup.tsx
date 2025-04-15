@@ -2,7 +2,11 @@
 
 import React, { useState } from 'react';
 
-export default function PressTable() {
+interface CuttingGroupProps {
+  number: number;
+}
+
+export default function CuttingGroup({ number }: CuttingGroupProps) {
   const [rows, setRows] = useState([{ id: 1 }]);
 
   const addRow = () => {
@@ -15,21 +19,16 @@ export default function PressTable() {
   };
 
   return (
-    <div className="bg-gray-50 rounded-lg">
-      <div className="flex justify-between items-center p-3 bg-gray-100 rounded-t-lg">
-        <div className="flex items-center space-x-2">
-          <span className="text-lg font-medium text-[#333333]">3. プレス内容</span>
-        </div>
+    <div className="bg-white rounded-lg p-4 mb-4 border border-gray-200">
+      <div className="flex justify-between items-center mb-4">
+        <h4 className="text-base font-medium text-gray-900">裁断グループ {number}</h4>
       </div>
       <div className="p-3">
         <table className="min-w-full">
           <thead>
             <tr className="border-b border-gray-200">
-              <th className="text-left text-sm text-gray-900 pb-3">風合い</th>
+              <th className="text-left text-sm text-gray-900 pb-3">サイズ</th>
               <th className="text-left text-sm text-gray-900 pb-3">依頼先</th>
-              <th className="text-left text-sm text-gray-900 pb-3">投入予定日</th>
-              <th className="text-left text-sm text-gray-900 pb-3">完了予定日</th>
-              <th className="text-left text-sm text-gray-900 pb-3">出荷先</th>
               <th className="text-left text-sm text-gray-900 pb-3">本数</th>
               <th className="text-left text-sm text-gray-900 pb-3">操作</th>
             </tr>
@@ -38,7 +37,9 @@ export default function PressTable() {
             {rows.map((row) => (
               <tr key={row.id} className="border-b border-gray-100">
                 <td className="py-2 pr-4">
-                  <input type="text" placeholder="自由記述" className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" />
+                  <select className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    <option>選択</option>
+                  </select>
                 </td>
                 <td className="py-2 pr-4">
                   <select className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
@@ -46,18 +47,7 @@ export default function PressTable() {
                   </select>
                 </td>
                 <td className="py-2 pr-4">
-                  <input type="date" className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="年/月/日" />
-                </td>
-                <td className="py-2 pr-4">
-                  <input type="date" className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="年/月/日" />
-                </td>
-                <td className="py-2 pr-4">
-                  <select className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                    <option>選択</option>
-                  </select>
-                </td>
-                <td className="py-2 pr-4">
-                  <input type="number" defaultValue="24" className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" />
+                  <input type="number" defaultValue="1" className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" />
                 </td>
                 <td className="py-2 flex items-center space-x-2">
                   {row.id === Math.max(...rows.map(r => r.id)) && (

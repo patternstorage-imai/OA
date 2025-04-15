@@ -12,8 +12,12 @@ interface FabricOption {
 export default function SewingTable() {
   const [rows, setRows] = useState([{ id: 1, group: 1 }]);
   const [currentGroup, setCurrentGroup] = useState(1);
-  const [groupNames, setGroupNames] = useState<{ [key: number]: string }>({ 1: '縫製' });
-  const [groupQuantities, setGroupQuantities] = useState<{ [key: number]: number }>({ 1: 3 });
+  const [groupNames, setGroupNames] = useState<{ [key: number]: string }>({
+    1: 'グループ1'
+  });
+  const [groupQuantities, setGroupQuantities] = useState<{ [key: number]: number }>({
+    1: 24
+  });
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingGroup, setEditingGroup] = useState<number | null>(null);
   const [fabricOptions, setFabricOptions] = useState<FabricOption[]>([
@@ -22,16 +26,14 @@ export default function SewingTable() {
     { name: 'OA2234', process: 'なし', color: 'BKBK', selected: true },
   ]);
 
-  const addRow = () => {
-    setRows([...rows, { id: rows.length + 1, group: currentGroup }]);
+  const addRow = (group: number) => {
+    const newRow = { id: Math.max(...rows.map(r => r.id)) + 1, group };
+    setRows([...rows, newRow]);
   };
 
-  const addGroup = () => {
-    const newGroup = currentGroup + 1;
-    setCurrentGroup(newGroup);
-    setGroupNames({ ...groupNames, [newGroup]: '縫製' });
-    setGroupQuantities({ ...groupQuantities, [newGroup]: 3 });
-    setRows([...rows, { id: rows.length + 1, group: newGroup }]);
+  const openEditModal = (group: number) => {
+    setEditingGroup(group);
+    setIsEditModalOpen(true);
   };
 
   const deleteRow = (id: number) => {
@@ -56,11 +58,6 @@ export default function SewingTable() {
     setGroupQuantities({ ...groupQuantities, [group]: quantity });
   };
 
-  const openEditModal = (group: number) => {
-    setEditingGroup(group);
-    setIsEditModalOpen(true);
-  };
-
   const toggleFabricSelection = (index: number) => {
     const newOptions = [...fabricOptions];
     newOptions[index].selected = !newOptions[index].selected;
@@ -78,110 +75,88 @@ export default function SewingTable() {
               <span className="text-sm text-gray-500">({groupQuantities[group]}本)</span>
             </div>
             <div className="flex items-center space-x-2">
-              <button className="bg-white border border-purple-600 text-purple-600 px-4 py-1 rounded-lg hover:bg-purple-50 text-sm">
-                ハンガー履歴参照
-              </button>
               <button onClick={() => openEditModal(group)} className="p-1 hover:bg-gray-200 rounded">
                 <span className="sr-only">編集</span>
                 <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                </svg>
-              </button>
-              <button onClick={() => deleteGroup(group)} className="p-1 hover:bg-gray-200 rounded">
-                <span className="sr-only">削除</span>
-                <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                 </svg>
               </button>
             </div>
           </div>
-          <div className="p-4">
-            <table className="min-w-full table-fixed">
+          <div className="p-3">
+            <table className="min-w-full">
               <thead>
                 <tr className="border-b border-gray-200">
-                  <th className="text-left text-sm text-[#333333] pb-3 pr-4 w-1/6">種別</th>
-                  <th className="text-left text-sm text-[#333333] pb-3 pr-4 w-1/8">上下使用</th>
-                  <th className="text-left text-sm text-[#333333] pb-3 pr-4 w-1/6">糸使い-番手・色</th>
-                  <th className="text-left text-sm text-[#333333] pb-3 pr-4 w-1/8">依頼先</th>
-                  <th className="text-left text-sm text-[#333333] pb-3 pr-4 w-1/6">投入予定日</th>
-                  <th className="text-left text-sm text-[#333333] pb-3 pr-4 w-1/6">完了予定日</th>
-                  <th className="text-left text-sm text-[#333333] pb-3 pr-4 w-1/8">出荷先</th>
-                  <th className="text-left text-sm text-[#333333] pb-3 w-20">操作</th>
+                  <th className="text-left text-sm text-gray-900 pb-3">種別</th>
+                  <th className="text-left text-sm text-gray-900 pb-3">上下使用</th>
+                  <th className="text-left text-sm text-gray-900 pb-3">糸使い・番手・色</th>
+                  <th className="text-left text-sm text-gray-900 pb-3">依頼先</th>
+                  <th className="text-left text-sm text-gray-900 pb-3">投入予定日</th>
+                  <th className="text-left text-sm text-gray-900 pb-3">完了予定日</th>
+                  <th className="text-left text-sm text-gray-900 pb-3">出荷先</th>
+                  <th className="text-left text-sm text-gray-900 pb-3">本数</th>
+                  <th className="text-left text-sm text-gray-900 pb-3">操作</th>
                 </tr>
               </thead>
               <tbody>
                 {rows.filter(row => row.group === group).map((row) => (
                   <tr key={row.id} className="border-b border-gray-100">
                     <td className="py-2 pr-4">
-                      <select className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-[#333333] bg-white">
-                        <option value="">選択してください</option>
-                        <option value="panel">パネル：耳有</option>
-                        <option value="panel">パネル：耳無</option>
+                      <select className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <option>選択してください</option>
+                        <option>筒縫い</option>
                       </select>
                     </td>
                     <td className="py-2 pr-4">
-                      <select className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent text-[#333333]">
+                      <select className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                         <option>選択</option>
-                        <option>上下同じ</option>
                       </select>
                     </td>
                     <td className="py-2 pr-4">
-                      <select className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent text-[#333333]">
+                      <select className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                         <option>選択</option>
-                        <option>番手60・白</option>
                       </select>
                     </td>
                     <td className="py-2 pr-4">
-                      <select className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent text-[#333333]">
+                      <select className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                         <option>選択</option>
-                        <option>内製</option>
                       </select>
                     </td>
                     <td className="py-2 pr-4">
-                      <div className="relative">
-                        <input type="date" className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent text-[#333333]" />
-                        <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
-                          <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                      </div>
+                      <input type="date" className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="年/月/日" />
                     </td>
                     <td className="py-2 pr-4">
-                      <div className="relative">
-                        <input type="date" className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent text-[#333333]" />
-                        <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
-                          <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                      </div>
+                      <input type="date" className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="年/月/日" />
                     </td>
                     <td className="py-2 pr-4">
-                      <select className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent text-[#333333]">
+                      <select className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                         <option>選択</option>
-                        <option>MRQ</option>
-                        <option>BNS</option>
-                        <option>GSI</option>
-                        <option>OAT</option>
-                        <option>OAO</option>
                       </select>
                     </td>
-                    <td className="py-2">
-                      <div className="flex space-x-1">
-                        <button onClick={addRow} className="p-1 hover:bg-gray-100 rounded">
-                          <span className="sr-only">追加</span>
-                          <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <td className="py-2 pr-4">
+                      <input type="number" className="w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" defaultValue="24" />
+                    </td>
+                    <td className="py-2 flex items-center space-x-2">
+                      {row.id === Math.max(...rows.filter(r => r.group === group).map(r => r.id)) && (
+                        <button
+                          onClick={() => addRow(group)}
+                          className="p-2 hover:bg-gray-100 rounded-full"
+                        >
+                          <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                           </svg>
                         </button>
-                        <button onClick={() => deleteRow(row.id)} className="p-1 hover:bg-gray-100 rounded">
-                          <span className="sr-only">削除</span>
-                          <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      )}
+                      {rows.filter(r => r.group === group).length > 1 && (
+                        <button
+                          onClick={() => deleteRow(row.id)}
+                          className="p-2 hover:bg-gray-100 rounded-full"
+                        >
+                          <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                           </svg>
                         </button>
-                      </div>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -192,7 +167,12 @@ export default function SewingTable() {
       ))}
       <div className="flex justify-center mt-4">
         <button
-          onClick={addGroup}
+          onClick={() => {
+            const newGroup = Math.max(...rows.map(r => r.group)) + 1;
+            setRows([...rows, { id: Math.max(...rows.map(r => r.id)) + 1, group: newGroup }]);
+            setGroupNames(prev => ({ ...prev, [newGroup]: `グループ${newGroup}` }));
+            setGroupQuantities(prev => ({ ...prev, [newGroup]: 24 }));
+          }}
           className="flex items-center px-4 py-2 border border-purple-600 text-purple-600 rounded-lg hover:bg-purple-50"
         >
           <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -204,9 +184,20 @@ export default function SewingTable() {
 
       {/* 編集モーダル */}
       {isEditModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-[600px] max-h-[90vh] overflow-y-auto">
-            <h3 className="text-lg font-semibold text-[#333333] mb-4">縫製グループ設定</h3>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center z-50 pt-20 overflow-auto">
+          <div className="bg-white rounded-lg p-6 w-[500px] mb-20">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-lg font-semibold text-[#333333]">縫製グループ設定</h3>
+              <button 
+                onClick={() => setIsEditModalOpen(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
             <div className="space-y-4">
               <div>
                 <label className="block text-sm text-[#333333] mb-1">グループ名</label>
@@ -259,20 +250,15 @@ export default function SewingTable() {
                   縫製グループを削除
                 </button>
               </div>
-              <div className="flex justify-end space-x-3 pt-4">
-                <button
-                  onClick={() => setIsEditModalOpen(false)}
-                  className="px-4 py-2 text-gray-600 hover:text-gray-800 font-medium"
-                >
-                  キャンセル
-                </button>
-                <button
-                  onClick={() => setIsEditModalOpen(false)}
-                  className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-medium"
-                >
-                  保存
-                </button>
-              </div>
+            </div>
+
+            <div className="mt-6 flex justify-end">
+              <button
+                onClick={() => setIsEditModalOpen(false)}
+                className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700"
+              >
+                次へ
+              </button>
             </div>
           </div>
         </div>
