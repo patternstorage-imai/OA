@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 工程指図アプリケーション
 
-## Getting Started
+## 概要
+生地の加工工程を管理するためのWebアプリケーションです。
+生地の詳細情報から、裁断、縫製、加工、プレスまでの一連の工程を管理できます。
 
-First, run the development server:
+## 主な機能
+- 生地内容の管理と詳細表示
+- 裁断グループの追加・編集
+- 縫製グループの追加・編集
+- 加工グループの追加・編集
+- プレスグループの管理
+- 各グループの本数管理
+- 工程ごとの詳細な指示入力
 
+## 技術スタック
+- Next.js 15.3.0
+- React
+- TypeScript
+- Tailwind CSS
+
+## ローカル環境での実行方法
+
+### 前提条件
+- Node.js
+- npm または yarn
+
+### セットアップ手順
+1. リポジトリのクローン
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/patternstorage-imai/OA.git
+cd OA
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. 依存関係のインストール
+```bash
+npm install
+# または
+yarn install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. 開発サーバーの起動
+```bash
+npm run dev
+# または
+yarn dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. アプリケーションへのアクセス
+- ローカル環境: [http://localhost:3000](http://localhost:3000)
+- ネットワーク内: [http://192.168.3.32:3000](http://192.168.3.32:3000)
 
-## Learn More
+## デプロイについて
+現在、Vercelへのデプロイ設定が完了していない状態です。
+本番環境でアプリケーションを利用するためには、以下のいずれかの対応が必要です：
 
-To learn more about Next.js, take a look at the following resources:
+1. Vercelダッシュボードでの手動デプロイ設定
+   - GitHubリポジトリとVercelプロジェクトの連携
+   - デプロイ設定の構成
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. プロジェクト所有者によるVercelとGitHubの連携設定
+   - Vercelアカウントの作成
+   - GitHubリポジトリの連携設定
+   - 自動デプロイの設定
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 開発ステータス
+- [x] 基本的なUI実装
+- [x] 生地内容の管理機能
+- [x] 各工程グループの追加・編集機能
+- [x] モーダルでの詳細編集機能
+- [ ] Vercelデプロイの設定
+- [ ] ユーザー認証の実装
+- [ ] データの永続化
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 注意事項
+- 現在はフロントエンドの実装のみで、バックエンドとの連携は未実装です
+- データは一時的なものとして扱われ、ページのリロードで初期状態に戻ります
